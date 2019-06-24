@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeatRandomizer", "SeatRandomizer\SeatRandomizer.csproj", "{A30DF5C7-9EF7-467B-82F6-56312CDA6BBC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A30DF5C7-9EF7-467B-82F6-56312CDA6BBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A30DF5C7-9EF7-467B-82F6-56312CDA6BBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A30DF5C7-9EF7-467B-82F6-56312CDA6BBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A30DF5C7-9EF7-467B-82F6-56312CDA6BBC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {34943760-ACFB-4778-825E-AAC69E6956A8}
+	EndGlobalSection
+EndGlobal
