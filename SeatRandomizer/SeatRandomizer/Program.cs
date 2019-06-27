@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading;
 
 namespace SeatRandomizer
 {
@@ -8,6 +10,7 @@ namespace SeatRandomizer
     {
         static string currentDir = Directory.GetCurrentDirectory();
         static string filePath = $"{currentDir}../../../../../seatArrangements.txt";
+        static List<Student> studentList = new List<Student>();
 
         // Manage program flow
         static void Main(string[] args)
@@ -21,12 +24,31 @@ namespace SeatRandomizer
             // 3 Display new seat arrangement
 
             StartProgram();
+
+            if (!File.Exists(filePath))
+            {
+                CreateFile();
+            }
+
             LoadStudentSeatHistory();
-            DisplaySeatArrangement();
             RandomizeNewSeats();
             WriteToFile();
             DisplaySeatArrangement();
+            ResetVariables();
+        }
+        
+        private static void CreateFile()
+        {
+            string[] studentArray = 
+                { "Håkan,11", "Mattias,12", "Mikael,13", "Ingrid,14", "Adam,21", "Victoria,22",
+                "Tomas,23", "Samira,24", "Linnéa,31", "Arvid,32", "Joakim,33", "Nick,34" };
 
+            File.WriteAllLines(filePath, studentArray);
+        }
+
+    private static void ResetVariables()
+        {
+            Seat.ResetAllSeats();
         }
 
         // Print welcome message DONE
@@ -43,7 +65,7 @@ namespace SeatRandomizer
             Console.ResetColor();
         }
 
-        // Load the previous seating arrangement from file into the Student class
+        // Load the previous seating arrangement from file into the Student class and add student to studentList.
         private static void LoadStudentSeatHistory()
         {
             string[] seatArrangements = File.ReadAllLines(filePath);
@@ -51,25 +73,98 @@ namespace SeatRandomizer
             {
                 string[] personSeatArr = entry.Split(',', 2);
                 Student student = new Student(personSeatArr[0], personSeatArr[1]);
+                studentList.Add(student);
             }
         }
 
         // Show seating arrangement
         private static void DisplaySeatArrangement()
         {
-            throw new NotImplementedException();
+            List<Student> sortedStudentList = studentList.OrderBy(s => s.currentSeat).ToList();
+
+            foreach (var student in sortedStudentList)
+            {
+                student.name 
+            }
+
+            // Print seat arrangements
+            
+            for (int i = 0; i < 3; i++)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+
+                }
+            }
+
+            // Print student name and student seat history to console
+            //foreach (var student in studentList)
+            //{
+            //    Console.WriteLine($"Student: {student.name}");
+
+            //    string seatHistory = "";
+            //    foreach (var seat in student.seatHistory)
+            //    {
+            //        seatHistory = seatHistory + $"{seat} ";
+            //    }
+            //    Console.WriteLine($"Seat history: {seatHistory}");
+            //    Console.WriteLine();
+            //}
         }
 
-        // Give everyone new seats, never seating someone on the same seat as last time.
+        // Give everyone new seats, trying to never seat someone on the same seat as last time.
         private static void RandomizeNewSeats()
         {
-            throw new NotImplementedException();
+
+            foreach (var student in studentList)
+            {
+                bool done = false;
+
+                int randomSeat;
+                int numIterations = 0;
+
+                do
+                {
+                    randomSeat = Seat.GetRandomSeat();
+                    if (!student.TryNewStudentSeat(randomSeat.ToString()))
+                    {
+                        Seat.InvalidSeat(randomSeat);
+
+                    }
+                    else
+                    {
+                        done = true;
+                    }
+
+                    if (numIterations > 15 && !done)
+                    {
+                        student.SetStudentSeat(randomSeat.ToString());
+                        done = true;
+                    }
+                    numIterations++;
+                } while (!done);
+
+            }
         }
 
-        // Write new seat arrangement to file in same folder.
+        // Write new seat arrangement to file seatarrangements.txt
         private static void WriteToFile()
         {
-            throw new NotImplementedException();
+            List<string> studentSeatData = new List<string>();
+
+            foreach (var student in studentList)
+            {
+                string studentData = student.name;
+                foreach (var seat in student.seatHistory)
+                {
+                    studentData = studentData + "," + seat;
+                }
+                studentSeatData.Add(studentData);
+            }
+
+            string[] outData = studentSeatData.ToArray();
+
+            File.WriteAllLines(filePath, outData);
         }
     }
 }
