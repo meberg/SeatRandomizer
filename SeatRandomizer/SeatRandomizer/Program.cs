@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 
 namespace SeatRandomizer
@@ -82,19 +83,24 @@ namespace SeatRandomizer
         {
             List<Student> sortedStudentList = studentList.OrderBy(s => s.currentSeat).ToList();
 
-            foreach (var student in sortedStudentList)
-            {
-                student.name 
-            }
-
             // Print seat arrangements
-            
+            int index = 0;
             for (int i = 0; i < 3; i++)
             {
-                for (int i = 0; i < 4; i++)
-                {
 
+                for (int i2 = 0; i2 < 4; i2++)
+                {
+                    if (sortedStudentList[index].name == "Victoria")
+                    {
+                        Console.Write($"{sortedStudentList[index].name}\t");
+                    }
+                    else
+                    {
+                        Console.Write($"{sortedStudentList[index].name}\t\t");
+                    }
+                    index++;
                 }
+                Console.WriteLine();
             }
 
             // Print student name and student seat history to console

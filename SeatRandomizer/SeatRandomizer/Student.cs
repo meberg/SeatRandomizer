@@ -11,7 +11,7 @@ namespace SeatRandomizer
 
     class Student
     {
-        public string name { get; private set; }
+        public string name { get; set; }
         public int currentSeat { get; private set; }
         public List<int> seatHistory;
         // Valid seats
