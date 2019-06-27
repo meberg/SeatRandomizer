@@ -1,0 +1,12 @@
+﻿Victoria,11
+Mikael,12
+Linnéa,13
+Ingrid,14
+Joakim,21
+Håkan,22
+Adam,23
+Tomas,24
+Nick,31
+Samira,32
+Mattias,33
+Arvid,34
