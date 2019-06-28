@@ -10,7 +10,7 @@ namespace SeatRandomizer
     class Program
     {
         static string currentDir = Directory.GetCurrentDirectory();
-        static string filePath = $"{currentDir}../../../../../seatArrangements.txt";
+        static string filePath = $"{currentDir}/seatArrangements.txt";
         static List<Student> studentList = new List<Student>();
 
         // Manage program flow
@@ -100,6 +100,7 @@ namespace SeatRandomizer
                     index++;
                 }
                 Console.WriteLine();
+                Console.WriteLine();
             }
 
             //Print student name and student seat history to console
@@ -172,5 +173,7 @@ namespace SeatRandomizer
 
             File.WriteAllLines(filePath, outData);
         }
+
+
     }
 }
