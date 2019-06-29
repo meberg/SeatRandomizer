@@ -189,6 +189,12 @@ namespace SeatRandomizer
             //// Test line
             //Console.WriteLine(todaysSeat);
 
+            //// Tip: Repeat a string:
+            //var stringRepeat = string.Concat(Enumerable.Repeat("ABC", 100));
+            //Console.WriteLine(stringRepeat);
+            //// Tip: Repeat a char:
+            //string testString = new string('A', 100);
+            //Console.WriteLine(testString);
 
             //Print student name and student seat history to console
             //Console.WriteLine();
