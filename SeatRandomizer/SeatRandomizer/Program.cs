@@ -126,7 +126,8 @@ namespace SeatRandomizer
 
             List<Student> sortedStudentList = studentList.OrderBy(s => s.currentSeat).ToList();
             List<string> seatList = new List<string> { "1:1", "1:2", "1:3", "1:4", "2:1", "2:2", "2:3", "2:4", "3:1", "3:2", "3:3", "3:4" };
-
+            string currentString;
+            int numOfSpaces;
 
             // Print seat arrangements
             int index = 0;
@@ -134,16 +135,49 @@ namespace SeatRandomizer
             {
                 for (int i2 = 0; i2 < 4; i2++)
                 {
-                    if (sortedStudentList[index].name == "Victoria")
+                    currentString = $"{seatList[index]} {sortedStudentList[index].name}";
+                    switch (sortedStudentList[index].name)
                     {
-                        todaysSeat = todaysSeat + $"{seatList[index]} {sortedStudentList[index].name}\t\t";
-                        //Console.Write($"{sortedStudentList[index].name}\t");
+                        case "Victoria":
+                            numOfSpaces = 23 - currentString.Length;
+                            break;
+                        case "Nick":
+                            numOfSpaces = 24 - currentString.Length;
+                            break;
+                        case "Arvid":
+                            numOfSpaces = 24 - currentString.Length;
+                            break;
+                        case "Ingrid":
+                            numOfSpaces = 24 - currentString.Length;
+                            break;
+                        case "Linnéa":
+                            numOfSpaces = 23 - currentString.Length;
+                            break;
+                        default:
+                            numOfSpaces = 22 - currentString.Length;
+                            break;
                     }
-                    else
-                    {
-                        todaysSeat = todaysSeat + $"{seatList[index]} {sortedStudentList[index].name}\t\t";
-                        //Console.Write($"{sortedStudentList[index].name}\t\t");
-                    }
+
+                    // Test code for console
+                    //if (sortedStudentList[index].name == "Victoria")
+                    //    {
+                    //        currentString = $"{seatList[index]} {sortedStudentList[index].name}";
+                    //        string spaces = new string(' ', 23 - currentString.Length);
+                    //        todaysSeat = todaysSeat + currentString + spaces;
+                    //        Console.Write($"{sortedStudentList[index].name}\t");
+                    //    }
+                    //    else
+                    //    {
+                    //        currentString = $"{seatList[index]} {sortedStudentList[index].name}";
+                    //        string spaces = new string(' ', 22 - currentString.Length);
+                    //        todaysSeat = todaysSeat + currentString + spaces;
+                    //        //Console.Write($"{sortedStudentList[index].name}\t\t");
+                    //    }
+
+                    currentString = $"{seatList[index]} {sortedStudentList[index].name}";
+                    string spaces = new string(' ', numOfSpaces);
+                    todaysSeat = todaysSeat + currentString + spaces;
+
                     index++;
                 }
                 todaysSeat = todaysSeat + "\n\n";
