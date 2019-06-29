@@ -138,20 +138,17 @@ namespace SeatRandomizer
                     currentString = $"{seatList[index]} {sortedStudentList[index].name}";
                     switch (sortedStudentList[index].name)
                     {
-                        case "Victoria":
+                        case "Linnéa":
+                        case "Mikael":
+                        case "Samira":
+                        case "Tomas":
+                        case "Mattias":
                             numOfSpaces = 23 - currentString.Length;
                             break;
                         case "Nick":
-                            numOfSpaces = 24 - currentString.Length;
-                            break;
                         case "Arvid":
-                            numOfSpaces = 24 - currentString.Length;
-                            break;
                         case "Ingrid":
                             numOfSpaces = 24 - currentString.Length;
-                            break;
-                        case "Linnéa":
-                            numOfSpaces = 23 - currentString.Length;
                             break;
                         default:
                             numOfSpaces = 22 - currentString.Length;
