@@ -39,7 +39,7 @@ namespace SeatRandomizer
                 WriteToFile();
                 DisplaySeatArrangement();
                 ResetVariables();
-                //PostSlackMessage();
+                PostSlackMessage();
             }
 
         }
@@ -47,8 +47,8 @@ namespace SeatRandomizer
         // Fail safe against posting two times the same day.
         private static bool AlreadyPostedToday()
         {
-            //// Test line
-            //return false;
+            // Test line
+            return false;
 
             string filePathLast = $"{currentDir}/lastDayPosted.txt";
 
@@ -122,9 +122,11 @@ namespace SeatRandomizer
         private static void DisplaySeatArrangement()
         {
             string today = date.DayOfWeek.ToString() + " " + date.Day.ToString() + "/" + date.Month.ToString();
-            todaysSeat = $"\n\nSeats for {today}:\n\n";
+            todaysSeat = $"\n\nSeats for {today} [Row:Seat]:\n\n";
 
             List<Student> sortedStudentList = studentList.OrderBy(s => s.currentSeat).ToList();
+            List<string> seatList = new List<string> { "1:1", "1:2", "1:3", "1:4", "2:1", "2:2", "2:3", "2:4", "3:1", "3:2", "3:3", "3:4" };
+
 
             // Print seat arrangements
             int index = 0;
@@ -134,20 +136,25 @@ namespace SeatRandomizer
                 {
                     if (sortedStudentList[index].name == "Victoria")
                     {
-                        todaysSeat = todaysSeat + $"{sortedStudentList[index].name}\t\t";
+                        todaysSeat = todaysSeat + $"{seatList[index]} {sortedStudentList[index].name}\t\t";
                         //Console.Write($"{sortedStudentList[index].name}\t");
                     }
                     else
                     {
-                        todaysSeat = todaysSeat + $"{sortedStudentList[index].name}\t\t";
+                        todaysSeat = todaysSeat + $"{seatList[index]} {sortedStudentList[index].name}\t\t";
                         //Console.Write($"{sortedStudentList[index].name}\t\t");
                     }
                     index++;
                 }
                 todaysSeat = todaysSeat + "\n\n";
+
                 //Console.WriteLine();
                 //Console.WriteLine();
             }
+
+            //// Test line
+            //Console.WriteLine(todaysSeat);
+
 
             //Print student name and student seat history to console
             //Console.WriteLine();
