@@ -12,6 +12,8 @@ namespace SeatRandomizer
         static string currentDir = Directory.GetCurrentDirectory();
         static string filePath = $"{currentDir}/seatArrangements.txt";
         static List<Student> studentList = new List<Student>();
+        static DateTime date = DateTime.Now;
+        static string todaysSeat = "";
 
         // Manage program flow
         static void Main(string[] args)
@@ -23,21 +25,59 @@ namespace SeatRandomizer
             // 4 Randomize new seats as array, never putting someone on the same seat as last time.
             // 5 Write array to file
             // 3 Display new seat arrangement
-
-            StartProgram();
-
-            if (!File.Exists(filePath))
+            if (!AlreadyPostedToday())
             {
-                CreateFile();
+                StartProgram();
+
+                if (!File.Exists(filePath))
+                {
+                    CreateFile();
+                }
+
+                LoadStudentSeatHistory();
+                RandomizeNewSeats();
+                WriteToFile();
+                DisplaySeatArrangement();
+                ResetVariables();
+                //PostSlackMessage();
             }
 
-            LoadStudentSeatHistory();
-            RandomizeNewSeats();
-            WriteToFile();
-            DisplaySeatArrangement();
-            ResetVariables();
         }
-        
+
+        // Fail safe against posting two times the same day.
+        private static bool AlreadyPostedToday()
+        {
+            //// Test line
+            //return false;
+
+            string filePathLast = $"{currentDir}/lastDayPosted.txt";
+
+            if (!File.Exists(filePathLast))
+            {
+                File.Create(filePathLast);
+            }
+
+            string lastTimeRun = File.ReadAllText(filePathLast);
+            string today = date.Date.ToString();
+
+            if (date.DayOfWeek.ToString() == "Saturday" || date.DayOfWeek.ToString() == "Sunday")
+            {
+                Console.WriteLine("Today is not a school day.");
+                return true;
+            }
+            else if (today == lastTimeRun)
+            {
+                Console.WriteLine("You already randomized seats today.");
+                return true;
+            }
+            else
+            {
+                File.WriteAllText(filePathLast, today);
+                return false;
+            }
+
+        }
+
         private static void CreateFile()
         {
             string[] studentArray = 
@@ -81,6 +121,9 @@ namespace SeatRandomizer
         // Show seating arrangement
         private static void DisplaySeatArrangement()
         {
+            string today = date.DayOfWeek.ToString() + " " + date.Day.ToString() + "/" + date.Month.ToString();
+            todaysSeat = $"\n\nSeats for {today}:\n\n";
+
             List<Student> sortedStudentList = studentList.OrderBy(s => s.currentSeat).ToList();
 
             // Print seat arrangements
@@ -91,16 +134,19 @@ namespace SeatRandomizer
                 {
                     if (sortedStudentList[index].name == "Victoria")
                     {
-                        Console.Write($"{sortedStudentList[index].name}\t");
+                        todaysSeat = todaysSeat + $"{sortedStudentList[index].name}\t\t";
+                        //Console.Write($"{sortedStudentList[index].name}\t");
                     }
                     else
                     {
-                        Console.Write($"{sortedStudentList[index].name}\t\t");
+                        todaysSeat = todaysSeat + $"{sortedStudentList[index].name}\t\t";
+                        //Console.Write($"{sortedStudentList[index].name}\t\t");
                     }
                     index++;
                 }
-                Console.WriteLine();
-                Console.WriteLine();
+                todaysSeat = todaysSeat + "\n\n";
+                //Console.WriteLine();
+                //Console.WriteLine();
             }
 
             //Print student name and student seat history to console
@@ -174,6 +220,12 @@ namespace SeatRandomizer
             File.WriteAllLines(filePath, outData);
         }
 
+        private static void PostSlackMessage()
+        {
+            string urlWithAccessToken = "https://hooks.slack.com/services/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";
+            var client = new SlackClient(urlWithAccessToken);
 
+            client.PostMessage(todaysSeat);
+        }
     }
 }
