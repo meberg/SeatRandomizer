@@ -48,7 +48,7 @@ namespace SeatRandomizer
         private static bool AlreadyPostedToday()
         {
             //Test line
-            //return false;
+            return false;
 
             string filePathLast = $"{currentDir}/lastDayPosted.txt";
 
@@ -58,21 +58,21 @@ namespace SeatRandomizer
             }
 
             string lastTimeRun = File.ReadAllText(filePathLast);
-            string today = date.Date.ToString();
+            string tomorrow = date.AddDays(1).Date.ToString();
 
-            if (date.DayOfWeek.ToString() == "Saturday" || date.DayOfWeek.ToString() == "Sunday")
+            if (date.DayOfWeek.ToString() == "Friday" || date.DayOfWeek.ToString() == "Saturday")
             {
-                Console.WriteLine("Today is not a school day.");
+                Console.WriteLine("Tomorrow is not a school day.");
                 return true;
             }
-            else if (today == lastTimeRun)
+            else if (tomorrow == lastTimeRun)
             {
-                Console.WriteLine("You already randomized seats today.");
+                Console.WriteLine("You already randomized seats for tomorrow.");
                 return true;
             }
             else
             {
-                File.WriteAllText(filePathLast, today);
+                File.WriteAllText(filePathLast, tomorrow);
                 return false;
             }
 
@@ -121,8 +121,8 @@ namespace SeatRandomizer
         // Show seating arrangement
         private static void DisplaySeatArrangement()
         {
-            string today = date.DayOfWeek.ToString() + " " + date.Day.ToString() + "/" + date.Month.ToString();
-            todaysSeat = $"\n\nSeats for {today} [Row:Seat]:\n\n";
+            string tomorrow = date.AddDays(1).DayOfWeek.ToString() + " " + date.AddDays(1).Day.ToString() + "/" + date.AddDays(1).Month.ToString();
+            todaysSeat = $"\n\nSeats for {tomorrow} [Row:Seat]:\n\n";
 
             List<Student> sortedStudentList = studentList.OrderBy(s => s.currentSeat).ToList();
             List<string> seatList = new List<string> { "1:1", "1:2", "1:3", "1:4", "2:1", "2:2", "2:3", "2:4", "3:1", "3:2", "3:3", "3:4" };
