@@ -47,14 +47,15 @@ namespace SeatRandomizer
         // Fail safe against posting two times the same day.
         private static bool AlreadyPostedToday()
         {
-            //Test line
-            return false;
+            ////Test line
+            //return false;
 
             string filePathLast = $"{currentDir}/lastDayPosted.txt";
 
             if (!File.Exists(filePathLast))
             {
-                File.Create(filePathLast);
+                var file = File.Create(filePathLast);
+                file.Close();
             }
 
             string lastTimeRun = File.ReadAllText(filePathLast);

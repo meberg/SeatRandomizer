@@ -7,6 +7,16 @@ using System.Text;
 
 namespace SeatRandomizer
 {
+    // Used like this:
+    //private static void PostSlackMessage()
+    //{
+    //    string urlWithAccessToken = "https://hooks.slack.com/services/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";
+    //    var client = new SlackClient(urlWithAccessToken);
+
+    //    client.PostMessage(todaysSeat);
+    //}
+
+
     //A simple C# class to post messages to a Slack channel
     //Note: This class uses the Newtonsoft Json.NET serializer available via NuGet
     public class SlackClient
